@@ -5,7 +5,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.2
+  sdk:  '>=3.0.0 <4.0.0'
+
 
 dependencies:
   flutter:
@@ -24,6 +25,7 @@ dependencies:
   flutter_hooks: ^0.21.2
   animations: ^2.0.11
   font_awesome_flutter: ^10.8.0
+  badges: ^3.1.2
 
 dev_dependencies:
   bloc_test: ^10.0.0
@@ -40,13 +42,9 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Montaserrat
+    - family: AppIcon
       fonts:
-        - asset: assets/fonts/Montserrat-Medium.ttf
-    - family: MontaserratAlternates
-      fonts:
-        - asset: assets/fonts/MontserratAlternates-Medium.ttf
-     
+        - asset: assets/fonts/AppIcon.ttf
 
 flutter_gen: 
   output: lib/gen/
