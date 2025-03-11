@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:notepad/page/food/widget/list_container.dart';
+import 'package:notepad/utils/extension.dart';
 
 class WidgetTabbar extends StatefulWidget {
   const WidgetTabbar({super.key});
@@ -20,40 +22,70 @@ class _WidgetTabbarState extends State<WidgetTabbar>
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-          child: TabBar(controller: _tabController, tabs: [
-            Text("All"),
-            Text("Sushi"),
-            Text("Kebab"),
-            Text("Tempura")
-          ]),
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25.0),
+            ),
+            child: TabBar(
+              controller: _tabController,
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.grey[400],
+              ),
+              overlayColor: WidgetStatePropertyAll(Colors.transparent),
+              indicatorSize: TabBarIndicatorSize.tab,
+              labelColor: Colors.white,
+              dividerHeight: 0,
+              tabs: [
+                _buildBar(context, "All"),
+                _buildBar(context, "Sushi"),
+                _buildBar(context, "Kebab"),
+                _buildBar(context, "Tempura"),
+              ],
+            ),
+          ),
         ),
-        SizedBox(
-          height: 300, // 或者你可以根据内容的大小来调整高度
-          child: TabBarView(controller: _tabController, children: [
-            _foodList(context),
-            _foodList(context),
-            _foodList(context),
-            _foodList(context),
-          ]),
+        Expanded(
+          child: TabBarView(
+            controller: _tabController,
+            children: [
+              // _foodList(context, 'All'),
+              ListContainer(),
+              _foodList(context, 'Sushi'),
+              _foodList(context, 'Kebab'),
+              _foodList(context, 'Tempura'),
+            ],
+          ),
         ),
       ],
     );
   }
 
-  // 返回 ListView.builder
-  Widget _foodList(BuildContext context) {
+  Widget _foodList(BuildContext context, String category) {
     return ListView.builder(
-      itemCount: 10, // 假设这里的数量为 10
+      itemCount: 10,
       itemBuilder: (context, index) {
         return ListTile(
-          leading: Icon(Icons.fastfood),
-          title: Text("Food Item $index"),
-          subtitle: Text("Description for food item $index"),
+          leading: const Icon(Icons.fastfood),
+          title: Text("$category Item $index"),
+          subtitle: Text("Description for $category item $index"),
         );
       },
+    );
+  }
+
+  Widget _buildBar(BuildContext context, String text) {
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 9),
+      child: Text(
+        text,
+        style: context.headlineMedium,
+      ),
     );
   }
 }

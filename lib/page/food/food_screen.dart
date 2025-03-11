@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -44,7 +45,6 @@ class FoodListScreen extends StatelessWidget {
         ),
         IconButton(
             onPressed: () {},
-
             //为图标添加徽章，类似消息红点
             icon: Badge(
               badgeStyle: const BadgeStyle(
@@ -80,33 +80,42 @@ class FoodListScreen extends StatelessWidget {
     );
   }
 
+  Widget _buildSliver(BuildContext context) {
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Text(
+            "Morning, Sina",
+            style: context.headlineSmall,
+          ).fadeAnimation(0.2),
+          Text(
+            "What do you want to eat \ntoday",
+            style: context.displayLarge,
+          ).fadeAnimation(0.2),
+          _searchBar(context),
+          Text(
+            "Available for you",
+            style: context.displaySmall,
+          ),
+        ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => SystemChannels.textInput.invokeMethod("TextInput.hide"),
       child: Scaffold(
         appBar: _appBar(context),
-        body: SingleChildScrollView(
+        body: Padding(
           padding: EdgeInsets.all(20.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Text(
-                "Morning, Sina",
-                style: context.headlineSmall,
-              ).fadeAnimation(0.2),
-              Text(
-                "What do you want to eat \ntoday",
-                style: context.displayLarge,
-              ).fadeAnimation(0.2),
-              _searchBar(context),
-              Text(
-                "Available for you",
-                style: context.displaySmall,
-              ),
-              WidgetTabbar(),
+          child: NestedScrollView(
+            dragStartBehavior: DragStartBehavior.start,
+            floatHeaderSlivers: true,
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+              SliverToBoxAdapter(child: _buildSliver(context)),
             ],
+            body: WidgetTabbar(),
           ),
         ),
       ),
