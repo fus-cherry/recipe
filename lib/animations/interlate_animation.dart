@@ -35,16 +35,13 @@ class _InterlateAnimationState extends State<InterlateAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
 
-  bool isFont = true;
+  bool isLogin = true;
   @override
   void initState() {
     _animationController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 600),
     );
-    // widget.screne.addListener(() {
-    //   _onScreneChange();
-    // });
     super.initState();
   }
 
@@ -54,13 +51,20 @@ class _InterlateAnimationState extends State<InterlateAnimation>
     super.dispose();
   }
 
-  Widget mainAnimation(Widget child) {
+  Widget mainAnimation(Widget child, bool isLogin) {
     return AnimatedBuilder(
       animation: _animationController,
       builder: (context, child) {
-        return Transform.translate(
-          offset:
-              Offset(_animationController.value, _animationController.value),
+        return Transform(
+          transform: Matrix4.identity()
+            ..translate(
+                isLogin
+                    ? _animationController.value * 100
+                    : -_animationController.value * 100,
+                isLogin
+                    ? -_animationController.value * 100
+                    : _animationController.value * 100),
+          alignment: Alignment.center,
           child: child,
         );
       },
@@ -68,19 +72,29 @@ class _InterlateAnimationState extends State<InterlateAnimation>
     );
   }
 
-  void _changeState(LoginState state) {
-    if (state is LoginLoadingState) {
-      _animationController.forward();
+  bool _changeState(LoginState previous, LoginState current) {
+    if (current is LoginInitialState) {
+      _animationController.forward().then((_) {
+        isLogin = true;
+      }).then((_) {
+        _animationController.reverse();
+      });
     }
-    if (state is LoginSuccessState) {
-      _animationController.reverse();
+    if (current is SignInInitialState) {
+      _animationController.forward().then((_) {
+        isLogin = false;
+      }).then((_) {
+        _animationController.reverse();
+      });
     }
+    return true;
   }
 
-  @override
   Widget build(BuildContext context) {
     return BlocBuilder<LoginBloc, LoginState>(
-      buildWhen: (prev, state) => prev.runtimeType != state.runtimeType,
+      buildWhen: (previous, current) {
+        return _changeState(previous, current);
+      },
       builder: (context, state) {
         return Stack(
           children: _buildStack(state),
@@ -93,19 +107,22 @@ class _InterlateAnimationState extends State<InterlateAnimation>
     switch (state) {
       case LoginInitialState():
         return [
-          mainAnimation(widget.backChild),
-          mainAnimation(widget.fontChild),
+          mainAnimation(widget.backChild, isLogin),
+          mainAnimation(widget.fontChild, !isLogin),
         ];
 
       case SignInInitialState():
         return [
-          mainAnimation(widget.fontChild),
-          mainAnimation(widget.backChild),
+          mainAnimation(widget.fontChild, !isLogin),
+          mainAnimation(widget.backChild, isLogin),
         ];
       default:
         return [
-          mainAnimation(widget.backChild),
-          mainAnimation(widget.fontChild),
+          mainAnimation(widget.backChild, isLogin),
+          mainAnimation(
+            widget.fontChild,
+            !isLogin,
+          )
         ];
     }
   }

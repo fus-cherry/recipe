@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
+/**
+ * 文渐入渐出效果,跟准确来讲是,文本位移动画加渐入渐出动画
+ */
+
 enum AniProps { opacity, translateX, translateY, scale }
 
 class FadeAnimation extends StatefulWidget {

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notepad/blocs/login_blocs/login_bloc.dart';
 import 'package:notepad/components/text_input.dart';
 
-class BackChild extends StatefulWidget {
-  const BackChild({super.key});
+class FrontChild extends StatefulWidget {
+  const FrontChild({
+    super.key,
+    required this.animationController,
+  });
+
+  final AnimationController animationController;
 
   @override
-  State<BackChild> createState() => _BackChildState();
+  State<FrontChild> createState() => _FrontChildState();
 }
 
-class _BackChildState extends State<BackChild> {
+class _FrontChildState extends State<FrontChild> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -29,7 +32,7 @@ class _BackChildState extends State<BackChild> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Text(
-              '注册',
+              '登录',
               style: Theme.of(context).textTheme.titleLarge,
               textAlign: TextAlign.center,
             ),
@@ -44,7 +47,7 @@ class _BackChildState extends State<BackChild> {
             SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () {
-                context.read<LoginBloc>().add(LoginInitial());
+                widget.animationController.forward();
               },
               child: Text('登录'),
             ),
