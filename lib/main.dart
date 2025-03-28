@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notepad/blocs/food_blocs.dart/food_bloc.dart';
+import 'package:notepad/blocs/food_blocs/food_bloc.dart';
+import 'package:notepad/blocs/login_blocs/login_bloc.dart';
+import 'package:notepad/blocs/message_bloc/message_bloc.dart';
 import 'package:notepad/blocs/theme_blocs/theme_bloc.dart';
 import 'package:notepad/blocs/theme_blocs/theme_state.dart';
 import 'package:notepad/data/repository/repository.dart';
-import 'package:notepad/page/home/home_screen.dart';
+import 'package:notepad/page/login/login_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,12 +36,18 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider<ThemeBloc>(
             create: (context) => ThemeBloc(),
-          )
+          ),
+          BlocProvider<MessageBloc>(
+            create: (context) => MessageBloc(),
+          ),
+          BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(),
+          ),
         ],
         child: BlocBuilder<ThemeBloc, ThemeBlocState>(
           builder: (context, State) {
             return MaterialApp(
-              home: HomeScreen(),
+              home: LoginScreen(),
               title: 'notepad',
               debugShowCheckedModeBanner: false,
               theme: State.themeData,

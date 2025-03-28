@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:notepad/blocs/food_blocs.dart/food_event.dart';
-import 'package:notepad/blocs/food_blocs.dart/food_state.dart';
+import 'package:notepad/blocs/food_blocs/food_event.dart';
+import 'package:notepad/blocs/food_blocs/food_state.dart';
 import 'package:notepad/data/model/food.dart';
 import 'package:notepad/data/repository/repository.dart';
 import 'package:notepad/utils/extension.dart';

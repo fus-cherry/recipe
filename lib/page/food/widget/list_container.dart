@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -13,7 +15,8 @@ class ListContainer extends StatefulWidget {
 class _ListContainerState extends State<ListContainer>
     with TickerProviderStateMixin {
   // 定义一个列表，存储要加载的图片索引
-  final List<int> _imageIndices = List.generate(20, (index) => index + 1);
+  final List<int> _imageIndices =
+      List.generate(20, (index) => Random().nextInt(20));
 
   @override
   Widget build(BuildContext context) {
@@ -29,28 +32,29 @@ class _ListContainerState extends State<ListContainer>
         itemCount: _imageIndices.length,
         itemBuilder: (context, index) {
           // 使用 CachedNetworkImage 加载图片
-          return _buildBox("https://picsum.photos/200/300?random=$index");
+          return _buildBox(
+              "https://picsum.photos/1080/0?random=${_imageIndices[index]}");
         },
       ),
     );
   }
-}
 
-Widget _buildBox(String imageUrl) {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-    ),
-    child: ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(10)),
-      child: CachedNetworkImage(
-        imageUrl: imageUrl,
-        placeholder: (context, url) => SpinKitSquareCircle(
-          color: Colors.white,
-        ),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
+  Widget _buildBox(String imageUrl) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
       ),
-    ),
-  );
+      child: ClipRRect(
+        borderRadius: BorderRadius.all(Radius.circular(10)),
+        child: CachedNetworkImage(
+          imageUrl: imageUrl,
+          placeholder: (context, url) => SpinKitSquareCircle(
+            color: Colors.white,
+          ),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        ),
+      ),
+    );
+  }
 }

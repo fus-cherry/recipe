@@ -12,7 +12,7 @@ class HomeScreen extends HookWidget {
 
   final List<Widget> screen = [
     const FoodListScreen(),
-    const CartScreen(),
+    const MessagePage(),
     const FavoriteScreen(),
     const ProfileScreen(),
   ];
