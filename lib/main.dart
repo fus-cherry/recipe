@@ -10,7 +10,6 @@ import 'package:notepad/data/repository/repository.dart';
 import 'package:notepad/page/login/login_screen.dart';
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
   SystemUiOverlayStyle systemUiOverlayStyle = const SystemUiOverlayStyle(
     statusBarColor: Colors.white,
     statusBarBrightness: Brightness.dark,

@@ -41,7 +41,8 @@ class _FlipAnimationState extends State<FlipAnimation> {
           return Transform(
             alignment: Alignment.center,
             transform: Matrix4.identity()
-              ..rotateY(widget.animationController.value * pi),
+              ..rotateY(widget.animationController.value * pi)
+              ..setEntry(0, 1, 0.01),
             child: widget.animationController.value < 0.5
                 ? widget.loginChild // 前半段显示前面的卡片
                 : Transform(
