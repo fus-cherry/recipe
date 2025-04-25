@@ -143,4 +143,9 @@ class Repository {
 
     return categories;
   }
+
+  get getUserInfo {
+    // const avartar = AppAsset.avatar;
+    //随机生成用户头像
+  }
 }

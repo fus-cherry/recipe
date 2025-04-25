@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:notepad/blocs/food_blocs/food_bloc.dart';
 import 'package:notepad/blocs/login_blocs/login_bloc.dart';
 import 'package:notepad/blocs/message_bloc/message_bloc.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
               title: 'notepad',
               debugShowCheckedModeBanner: false,
               theme: State.themeData,
+              builder: EasyLoading.init(),
             );
           },
         ),

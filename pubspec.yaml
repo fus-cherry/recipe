@@ -41,6 +41,14 @@ dependencies:
   #json解析扫描组件
   json_annotation: ^4.9.0
 
+  #网络请求
+  dio: ^5.8.0+1
+
+
+  #toast插件
+  flutter_easyloading: ^3.0.5
+  logger: ^2.5.0
+
 dev_dependencies:
   bloc_test: ^10.0.0
   flutter_test:

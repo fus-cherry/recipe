@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:notepad/data/model/enum_model.dart';
 
 part 'user_info.g.dart';
 
@@ -7,8 +8,10 @@ class UserInfo {
   final String name;
   final String phone;
   final String avatar;
+  final Sex sex;
 
-  UserInfo({
+  UserInfo(
+    this.sex, {
     required this.avatar,
     required this.name,
     required this.phone,
